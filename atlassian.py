@@ -1,5 +1,6 @@
 import urllib
 import re
+import pickle
 
 def addjob(joblist, url, title):
 	joblist[url] = title
@@ -29,10 +30,9 @@ def newjobsearch():
 				alljobs = addjob(alljobs, u, jobtitle)
 	return alljobs
 
-def printjoblist(joblist):
-	for key in joblist:
-		print joblist[key] + " - " + key
+def main():
+	j = newjobsearch()
+	pickle.dump(j, open("tmp/atlassian.pickle.new", "wb"))
 
-j = newjobsearch()
-printjoblist(j)
-
+if __name__ == "__main__":
+    main()

@@ -1,5 +1,6 @@
 import urllib
 import re
+import pickle
 
 
 def newjobsearch():
@@ -12,9 +13,13 @@ def newjobsearch():
 			joblist["http://uow.employment.com.au" + result.group(1)] = result.group(2)
 	return joblist
 
-def printjoblist(joblist):
-	for key in joblist:
-		print joblist[key] + " - " + key
+def test():
+	print "hello"
 
-joblist = newjobsearch()
-printjoblist(joblist)
+def main():
+	j = newjobsearch()
+	pickle.dump(j, open("tmp/uow.pickle.new", "wb"))
+
+if __name__ == "__main__":
+    main()
+
