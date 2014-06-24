@@ -1,6 +1,7 @@
 import hashlib
 import pickle
 import imp
+import subprocess
 
 # again, read this from an ini
 sites = ['uow']
@@ -17,9 +18,16 @@ def checksum(f):
     md5.update(open(f).read())
     return md5.hexdigest()
 
+def sendemail(msg):
+    process = subprocess.Popen(['mail', '-s', "New Jobs!", "nick@triso.me"],
+                               stdin=subprocess.PIPE)
+    process.communicate(msg)
+
+	
 def whatsdifferent(file1, file2):
 	jobsold = pickle.load(open(file1))
 	jobsnew = pickle.load(open(file2))
+	new = {}
 
 	# this stuff was removed
 	for key in jobsold.keys():
@@ -34,6 +42,15 @@ def whatsdifferent(file1, file2):
 			print jobsnew[key] + " is new"
 			print key + " is new"
 			# add to db
+			new[key] = jobsnew[key]
+
+	if (len(new) > 0):
+		emailmsg = "New jobs:\n"
+		for job in new:
+			emailmsg += "%s - %s\n" % (job, new[job])
+		sendemail(emailmsg)
+		
+
 # main
 def main():
 	for s in sites:
