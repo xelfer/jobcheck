@@ -34,15 +34,12 @@ def whatsdifferent(file1, file2, emailmsg):
 	# this stuff was removed
 	for key in jobsold.keys():
 		if not key in jobsnew.keys():
-			print jobsold[key] + " is gone"
-			print key + " is gone"
+			pass
 			# mark removed in db
 	
 	# this stuff was added
 	for key in jobsnew.keys():
 		if not key in jobsold.keys():
-			print jobsnew[key] + " is new"
-			print key + " is new"
 			# add to db
 			new[key] = jobsnew[key]
 
